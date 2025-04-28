@@ -6,11 +6,12 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
-
 app.post('/firmar-challenge', async (req, res) => {
   try {
     const { transaction, secret } = req.body;
-
+    if (!process.env.SECRET_KEY) {
+      throw new Error("SECRET_KEY is not defined");
+    }
     if (!transaction || !secret) {
       return res.status(400).json({ error: 'Faltan parámetros: transaction o secret' });
     }
