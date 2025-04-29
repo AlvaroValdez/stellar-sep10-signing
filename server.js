@@ -22,7 +22,7 @@ app.post('/firmar-challenge', async (req, res) => {
     const keypair = StellarSdk.Keypair.fromSecret(process.env.SECRET_KEY);
 
     // Parseamos el challenge recibido
-    const tx = new StellarSdk.Transaction(transaction, StellarSdk.Networks.TESTNET);
+    const tx = StellarSdk.TransactionBuilder.fromXDR(transaction, StellarSdk.Networks.TESTNET);
     tx.sign(keypair);
 
     res.json({
